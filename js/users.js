@@ -1,24 +1,44 @@
-async function userFunc() {
-  try {
-    const url = await fetch("https://jsonplaceholder.typicode.com/users");
-    const response = await url.json();
-    userFunc(response);
-  } catch (error) {
-    console.log(error);
-  }
+const studentsList = document.querySelector(".row");
+
+async function fetchStudents() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const students = await response.json();
+  displetStudent(students);
 }
 
-function userFunc(data) {
+function displetStudent(students) {
   let str = "";
-  data.forEach((user) => {
+
+  students.forEach((student) => {
     str += `
-      <div class="card col-lg-3">
-         <p></p>
-         <p class="lead">${user.}</p>
-         <p class="lead">${user.}</p>
-         <p class="lead">${user.}</p>
-      </div>
-      `;
+        <div class="card">
+              <h2 class="h4">${student.name}</h2>
+              <h4 class="h4">${student.username}</h4>
+              <div class="cart-box">
+              <div><h4 class="h4">Email: </h4></div>
+              <div><p class="lead">${student.email}</p></div>
+            </div>
+            <div class="py-2">
+            <h4 class="h4">Address: </h4>
+            <p class="lead">${student.address.street}</p>
+            </div>
+            <div class="py-2">
+            <h4 class="h4">Website: </h4>
+            <p class="lead">${student.website}</p>
+            </div>
+            <div class="py-2">
+            <h4 class="title-name">Phone: </h4>
+           <p class="cart-title">${student.phone}</p>
+            </div>
+            <div class="py-2">
+            <a href="../pages/post.html" class="btn btn-black text-white">Post</a>
+           <a href="../pages/todo.html" class="btn">ToDo</a>
+            <a href="../pages/photos.html"class="btn">Photos</a>
+            </div>
+        </div>
+        `;
   });
-  dataInterfase.innerHTML = str;
+  studentsList.innerHTML = str;
 }
+
+fetchStudents().catch((error) => console.error("Error:", error));
